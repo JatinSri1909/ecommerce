@@ -6,9 +6,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Footer, Media } from '../../../../payload/payload-types'
-import { inclusions, noHeaderFooterUrls, profileNavItems } from '../../../constants'
+import { noHeaderFooterUrls } from '../../../constants'
 import { Button } from '../../Button'
-import { Gutter } from '../../Gutter'
 
 import classes from './index.module.scss'
 
@@ -18,34 +17,16 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
 
   return (
     <footer className={noHeaderFooterUrls.includes(pathname) ? classes.hide : ''}>
-      <Gutter>
-        <ul className={classes.inclusions}>
-          {inclusions.map(inclusion => (
-            <li key={inclusion.title}>
-              <Image
-                src={inclusion.icon}
-                alt={inclusion.title}
-                width={36}
-                height={36}
-                className={classes.icon}
-              />
-
-              <h5 className={classes.title}>{inclusion.title}</h5>
-              <p>{inclusion.description}</p>
-            </li>
-          ))}
-        </ul>
-      </Gutter>
-
       <div className={classes.footer}>
-        <Gutter>
-          <div className={classes.wrap}>
-            <Link href="/">
-              <Image src="/logo-white.svg" alt="logo" width={170} height={50} />
+        <div className={classes.footerContent}>
+          <div className={classes.footerLeft}>
+            <Link href="/" className={classes.logoLink}>
+              <Image src="/logo-black.svg" alt="logo" width={170} height={50} />
             </Link>
+            <p className={classes.copyright}>{footer?.copyright}</p>
+          </div>
 
-            <p>{footer?.copyright}</p>
-
+          <div className={classes.footerRight}>
             <div className={classes.socialLinks}>
               {navItems.map(item => {
                 const icon = item?.link?.icon as Media
@@ -70,7 +51,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
               })}
             </div>
           </div>
-        </Gutter>
+        </div>
       </div>
     </footer>
   )

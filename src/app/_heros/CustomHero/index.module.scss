@@ -1,25 +1,26 @@
 @import '../../_css/queries.scss';
 
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: black;
+}
+
 .heroWrapper {
-  background-color: var(--color-dark-50);
   width: 100%;
-  max-width: 1560px;
-  max-height: 1000px; // Increased from 884px
+  max-width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   color: white;
-  position: relative; // Add position relative
-  
-  // Modify these background properties
-  background-size: 100%; // Increased from 'cover' to zoom out
-  background-position: center 30%; // Changed from center center - increase percentage to move down more
+  position: relative;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  transition: background-size 0.3s ease; // Smooth transition
-  
-  // Optional hover effect
-  &:hover {
-    background-size: 110%;
-  }
+  transition: all 0.5s ease;
 
   &::before {
     content: '';
@@ -28,25 +29,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); // Adjust opacity as needed (0.4 = 40% dark overlay)
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
     z-index: 1;
-  }
-
-  @include small-break {
-    background-size: cover;
-    background-position: top 40%; // Also update for small screens
-  }
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  min-height: 90vh; // Increased from 80vh to make it taller
-
-  @include small-break {
-    margin: 0;
   }
 }
 
@@ -54,47 +43,56 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 15% var(--gutter-h);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gutter-h);
   width: 100%;
   position: relative;
-  z-index: 2; // Ensure text appears above the overlay
+  z-index: 2;
 
   @include mid-break {
-    padding: 10% 30px;
-  }
-
-  @include small-break {
-    padding: 50px 30px;
+    padding: 0 30px;
   }
 
   h2 {
-    font-size: 70px;
-    margin: 32px 0;
+    font-size: 5rem;
+    line-height: 1.1;
+    margin: 0 0 30px;
     color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 0.8s ease forwards;
 
     @include mid-break {
-      font-size: 48px;
-      margin: 24px 0;
-      white-space: wrap;
+      font-size: 3.5rem;
     }
 
     @include small-break {
-      width: 70%;
-      font-size: 36px;
-      margin: 8px 0;
+      font-size: 2.5rem;
+      margin: 0 0 20px;
     }
   }
 
   p {
-    font-size: 30px;
-    color: white;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: #f0f0f0;
+    max-width: 600px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUp 0.8s ease forwards 0.2s;
 
     @include mid-break {
-      font-size: 24px;
+      font-size: 1.25rem;
     }
 
     @include small-break {
-      font-size: 18px;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
     }
   }
 }
@@ -104,29 +102,89 @@
   margin: 0;
   padding: 0;
   display: flex;
-  padding-top: 50px;
+  gap: 20px;
   flex-wrap: wrap;
-  margin: calc(var(--base) * -0.5);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUp 0.8s ease forwards 0.4s;
 
-  & > * {
-    margin: calc(var(--base) / 2);
+  li {
+    margin: 0;
   }
   
   a {
+    display: inline-block;
     background-color: #db001d;
     color: white;
     text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    transition: opacity 0.2s ease;
-    box-shadow: 0 2px 5px 2px  rgba(255, 255, 255, 0.697);
-    transition: 1s;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: 2px solid #db001d;
     
     &:hover {
-      
-      opacity: 0.9;
-      box-shadow: 0 2px 8px 2px  rgba(255, 255, 255, 0);
-      transform: scale(1.1);
+      background-color: transparent;
+      border-color: #db001d;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(219, 0, 29, 0.2);
     }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @include small-break {
+      padding: 12px 24px;
+      font-size: 1rem;
+    }
+  }
+
+  li:nth-child(2) {
+    a {
+      background-color: transparent;
+      border: 2px solid white;
+
+      &:hover {
+        background-color: white;
+        color: black;
+        border-color: white;
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Add a subtle parallax effect
+@media (min-width: 1024px) {
+  .heroWrapper {
+    background-attachment: fixed;
+  }
+}
+
+// Add responsive adjustments
+@media (max-width: 768px) {
+  .heroTextBox {
+    text-align: center;
+    
+    p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .links {
+    justify-content: center;
   }
 }

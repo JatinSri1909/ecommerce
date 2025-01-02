@@ -9,15 +9,19 @@ import classes from './index.module.scss'
 const Categories = ({ categories }: { categories: Category[] }) => {
   return (
     <section className={classes.container}>
-      <div className={classes.titleWrapper}>
-        <h3>Shop by Categories</h3>
-        <Link href="/products">Show All</Link>
-      </div>
+      <div className={classes.content}>
+        <div className={classes.titleWrapper}>
+          <h3>
+            Shop <span>By</span> Categories
+          </h3>
+          <Link href="/products">View All Categories</Link>
+        </div>
 
-      <div className={classes.list}>
-        {categories.map(category => {
-          return <CategoryCard key={category.id} category={category} />
-        })}
+        <div className={classes.list}>
+          {categories.map(category => {
+            return <CategoryCard key={category.id} category={category} />
+          })}
+        </div>
       </div>
     </section>
   )
