@@ -1,63 +1,89 @@
 @import '../../../_css/common';
 
 .filters {
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  position: sticky;
+  top: 100px;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(219, 0, 29, 0.1);
+  height: fit-content;
 
   @include large-break {
-    flex-direction: row;
-    gap: 40px;
+    position: static;
+    margin-bottom: 20px;
   }
-  
-  @include small-break {
-    flex-direction: column;
-    gap: 20px;
-  }
+}
 
-  @include small-break {
-    margin-top: 16px;
+.filterSection {
+  margin-bottom: 25px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: black;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: #db001d;
   }
 }
 
 .categories {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 12px;
 
-  @include large-break {
-    flex-direction: row;
+  label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    &:hover {
+      color: #db001d;
+      background: rgba(219, 0, 29, 0.05);
+    }
   }
 
-  @include small-break {
-    flex-direction: column;
-  }
-}
-
-.title {
-  white-space: nowrap;
-}
-
-.priceSlider {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-}
-
-.sliderWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  p {
-    white-space: nowrap;
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #db001d;
   }
 }
 
 .hr {
   margin: 20px 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(219, 0, 29, 0.1),
+    rgba(219, 0, 29, 0.05),
+    transparent
+  );
+  border: none;
 }
 

@@ -38,26 +38,24 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(30%, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   padding: 0;
   width: 100%;
 
   @include mid-break {
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
   @include small-break {
-    grid-template-columns: 100%;
+    grid-template-columns: 1fr;
   }
 }
 
 .pagination {
-  margin-top: calc(var(--base) * 2);
+  margin-top: 50px;
   display: flex;
   justify-content: center;
-
-  @include mid-break {
-    margin-top: var(--base);
-  }
+  gap: 10px;
 }
