@@ -38,19 +38,18 @@ export const CartPage: React.FC<{
         <Fragment>
           {cartIsEmpty ? (
             <div className={classes.empty}>
-              Your cart is empty.
-              {typeof productsPage === 'object' && productsPage?.slug && (
-                <Fragment>
-                  {' '}
-                  <Link href={`/${productsPage.slug}`}>Click here</Link>
-                  {` to shop.`}
-                </Fragment>
-              )}
+              Your cart is empty.{' '}
+              <Link href="/products" className={classes.emptyLink}>
+                Click here
+              </Link>
+              {' to shop.'}
               {!user && (
                 <Fragment>
                   {' '}
-                  <Link href={`/login?redirect=%2Fcart`}>Log in</Link>
-                  {` to view a saved cart.`}
+                  <Link href={`/login?redirect=%2Fcart`} className={classes.emptyLink}>
+                    Log in
+                  </Link>
+                  {' to view a saved cart.'}
                 </Fragment>
               )}
             </div>
