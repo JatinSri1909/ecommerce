@@ -41,7 +41,6 @@ const AccountForm: React.FC = () => {
     async (data: FormData) => {
       if (user) {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`, {
-          // Make sure to include cookies with fetch
           credentials: 'include',
           method: 'PATCH',
           body: JSON.stringify(data),
@@ -79,7 +78,6 @@ const AccountForm: React.FC = () => {
       )
     }
 
-    // Once user is loaded, reset form to have default values
     if (user) {
       reset({
         email: user.email,
@@ -92,66 +90,80 @@ const AccountForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-      <Message error={error} success={success} className={classes.message} />
-      {!changePassword ? (
-        <Fragment>
-          <Input
-            name="email"
-            label="Email Address"
-            required
-            register={register}
-            error={errors.email}
-            type="email"
-          />
-          <Input name="name" label="Name" register={register} error={errors.name} />
-
-          <p>
-            {'Change your account details below, or '}
-            <button
-              type="button"
-              className={classes.changePassword}
-              onClick={() => setChangePassword(!changePassword)}
-            >
-              click here
-            </button>
-            {' to change your password.'}
-          </p>
-        </Fragment>
-      ) : (
-        <Fragment>
-          <p>
-            {'Change your password below, or '}
-            <button
-              type="button"
-              className={classes.changePassword}
-              onClick={() => setChangePassword(!changePassword)}
-            >
-              cancel
-            </button>
-            .
-          </p>
-          <Input
-            name="password"
-            type="password"
-            label="Password"
-            required
-            register={register}
-            error={errors.password}
-          />
-          <Input
-            name="passwordConfirm"
-            type="password"
-            label="Confirm Password"
-            required
-            register={register}
-            validate={value => value === password.current || 'The passwords do not match'}
-            error={errors.passwordConfirm}
-          />
-        </Fragment>
+      {(error || success) && (
+        <Message error={error} success={success} className={classes.message} />
       )}
+      
+      <div className={classes.inputWrap}>
+        {!changePassword ? (
+          <Fragment>
+            <Input
+              name="email"
+              label="Email Address"
+              required
+              register={register}
+              error={errors.email}
+              type="email"
+            />
+            <Input 
+              name="name" 
+              label="Name" 
+              register={register} 
+              error={errors.name} 
+            />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Input
+              name="password"
+              type="password"
+              label="New Password"
+              required
+              register={register}
+              error={errors.password}
+            />
+            <Input
+              name="passwordConfirm"
+              type="password"
+              label="Confirm New Password"
+              required
+              register={register}
+              validate={value => value === password.current || 'The passwords do not match'}
+              error={errors.passwordConfirm}
+            />
+          </Fragment>
+        )}
+      </div>
+
+      <div className={classes.switchModes}>
+        {!changePassword ? (
+          <Fragment>
+            Want to change your password?
+            <button
+              type="button"
+              className={classes.changePassword}
+              onClick={() => setChangePassword(true)}
+            >
+              Click here
+            </button>
+          </Fragment>
+        ) : (
+          <Fragment>
+            Want to update your profile?
+            <button
+              type="button"
+              className={classes.changePassword}
+              onClick={() => setChangePassword(false)}
+            >
+              Click here
+            </button>
+          </Fragment>
+        )}
+      </div>
+
       <Button
         type="submit"
-        label={isLoading ? 'Processing' : changePassword ? 'Change Password' : 'Update Account'}
+        label={isLoading ? 'Processing...' : changePassword ? 'Update Password' : 'Update Profile'}
         disabled={isLoading}
         appearance="primary"
         className={classes.submit}

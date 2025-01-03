@@ -1,24 +1,78 @@
 @import '../../../_css/common';
 
 .form {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   margin-bottom: var(--base);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--base) / 2);
-  align-items: flex-start;
-  width: 100%;
+  gap: 24px;
+  max-width: 600px;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 15px 30px rgba(219, 0, 29, 0.1);
+  }
 
   @include mid-break {
+    padding: 20px;
     width: 100%;
   }
+}
+
+.message {
+  margin-bottom: 24px;
 }
 
 .changePassword {
   all: unset;
   cursor: pointer;
+  color: #db001d;
   text-decoration: underline;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .submit {
-  margin-top: calc(var(--base) / 2);
+  margin-top: 12px;
+  align-self: flex-start;
+  min-width: 160px;
+  background: #db001d;
+  color: white;
+  font-weight: 600;
+  padding: 15px 30px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: darken(#db001d, 10%);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.inputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.switchModes {
+  margin: 16px 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #666;
+  font-size: 0.9rem;
 }
