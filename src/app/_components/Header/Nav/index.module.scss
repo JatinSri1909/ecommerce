@@ -18,3 +18,9 @@
   opacity: 0;
   visibility: hidden;
 }
+
+.navLink {
+  text-decoration: none;
+  color: var(--color-dark-500);
+  transition: color 0.2s;
+}

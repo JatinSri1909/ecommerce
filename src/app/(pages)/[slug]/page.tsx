@@ -21,10 +21,8 @@ import { fetchDoc } from '../../_api/fetchDoc'
 export const dynamic = 'force-dynamic'
 
 import About from '../..//_components/About'
-import AboutUs from '../..//_components/About Us'
 import Alternative from '../..//_components/Alternative'
 import Categories from '../..//_components/Categories'
-import Contact from '../..//_components/Contact'
 import Feature from '../..//_components/Feature'
 import Newsletter from '../..//_components/Newsletter'
 import Promotion from '../..//_components/Promotion'
@@ -80,9 +78,6 @@ export default async function Page({ params: { slug = 'home' } }) {
               <Feature />
               <Testimonial />
               <Alternative />
-              <Newsletter />
-              <Contact />
-              <AboutUs />
             </div>
           </div>
         </section>
