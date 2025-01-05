@@ -44,7 +44,8 @@ const Testimonial: React.FC = () => {
     const subHeading = subHeadingRef.current
     const cards = cardsRef.current
 
-    gsap.fromTo(heading,
+    gsap.fromTo(
+      heading,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -53,11 +54,12 @@ const Testimonial: React.FC = () => {
         scrollTrigger: {
           trigger: section,
           start: 'top 80%',
-        }
-      }
+        },
+      },
     )
 
-    gsap.fromTo(subHeading,
+    gsap.fromTo(
+      subHeading,
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -67,23 +69,24 @@ const Testimonial: React.FC = () => {
         scrollTrigger: {
           trigger: section,
           start: 'top 80%',
-        }
-      }
+        },
+      },
     )
 
     cards.forEach((card, index) => {
-      gsap.fromTo(card,
+      gsap.fromTo(
+        card,
         { opacity: 0, scale: 0.9 },
         {
           opacity: 1,
           scale: 1,
           duration: 0.8,
-          delay: 0.3 + (index * 0.2),
+          delay: 0.3 + index * 0.2,
           scrollTrigger: {
             trigger: section,
             start: 'top 70%',
-          }
-        }
+          },
+        },
       )
     })
   }, [])
@@ -97,10 +100,10 @@ const Testimonial: React.FC = () => {
         </div>
         <div className={classes.testimonials}>
           {testimonials.map((testimonial, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={classes.testimonialCard}
-              ref={el => cardsRef.current[index] = el as HTMLDivElement}
+              ref={el => (cardsRef.current[index] = el as HTMLDivElement)}
             >
               <div className={classes.stars}>{'★'.repeat(testimonial.rating)}</div>
               <p className={classes.comment}>{testimonial.comment}</p>
