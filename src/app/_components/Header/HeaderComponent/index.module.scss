@@ -1,8 +1,16 @@
 .header {
-  padding: 15px 0;
-  background-color: #ffffff2c;
+  padding: 20px 0;
+  background: white;
+  position: sticky;
+  top: 0;
   z-index: 100;
-  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #eee;
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(219, 0, 29, 0.1);
+  }
 }
 
 .wrap {
@@ -10,13 +18,26 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: calc(var(--base) / 2) var(--base)
+  gap: calc(var(--base) / 2) var(--base);
 }
 
 .logo {
   width: 170px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .hide { 
   display: none;
+}
+
+// Dark mode support
+:global([data-theme="dark"]) {
+  .header {
+    background: var(--theme-elevation-50);
+    border-bottom: 1px solid var(--theme-elevation-100);
+  }
 }

@@ -2,15 +2,15 @@
 
 .nav {
   display: flex;
-  gap: calc(var(--base) / 4) var(--base);
+  gap: 30px;
   align-items: center;
   flex-wrap: wrap;
   opacity: 1;
-  transition: opacity 100ms linear;
+  transition: all 0.3s ease;
   visibility: visible;
 
-  > * {
-    text-decoration: none;
+  @include mid-break {
+    gap: 20px;
   }
 }
 
@@ -21,6 +21,104 @@
 
 .navLink {
   text-decoration: none;
-  color: var(--color-dark-500);
-  transition: color 0.2s;
+  color: black;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: #db001d;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    color: #db001d;
+    background: rgba(219, 0, 29, 0.05);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  &[data-active="true"] {
+    color: #db001d;
+    background: rgba(219, 0, 29, 0.05);
+    font-weight: 600;
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.loginBtn {
+  background: #db001d;
+  color: white;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: darken(#db001d, 10%);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.cartLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: black;
+
+  &:hover {
+    background: rgba(219, 0, 29, 0.05);
+    color: #db001d;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Dark mode support
+:global([data-theme="dark"]) {
+  .navLink {
+    color: var(--theme-elevation-1000);
+
+    &:hover {
+      background: var(--theme-elevation-100);
+    }
+
+    &[data-active="true"] {
+      background: var(--theme-elevation-100);
+    }
+  }
+
+  .cartLink {
+    color: var(--theme-elevation-1000);
+
+    &:hover {
+      background: var(--theme-elevation-100);
+    }
+  }
 }
