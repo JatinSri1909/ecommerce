@@ -56,40 +56,72 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
               <div className={classes.navSection}>
                 <h5>Quick Links</h5>
                 <ul>
-                  <li><Link href="/">Home</Link></li>
-                  <li><Link href="/products">Products</Link></li>
-                  <li><Link href="/about">About Us</Link></li>
-                  <li><Link href="/contact">Contact</Link></li>
+                  <li>
+                    <Link href="/">Home</Link>
+                  </li>
+                  <li>
+                    <Link href="/products">Products</Link>
+                  </li>
+                  <li>
+                    <Link href="/about">About Us</Link>
+                  </li>
+                  <li>
+                    <Link href="/contact">Contact</Link>
+                  </li>
                 </ul>
               </div>
 
               <div className={classes.navSection}>
                 <h5>Categories</h5>
                 <ul>
-                  <li><Link href="/products?category=electronics">Electronics</Link></li>
-                  <li><Link href="/products?category=fashion">Fashion</Link></li>
-                  <li><Link href="/products?category=home">Home & Living</Link></li>
-                  <li><Link href="/products?category=accessories">Accessories</Link></li>
+                  <li>
+                    <Link href="/products?category=electronics">Electronics</Link>
+                  </li>
+                  <li>
+                    <Link href="/products?category=fashion">Fashion</Link>
+                  </li>
+                  <li>
+                    <Link href="/products?category=home">Home & Living</Link>
+                  </li>
+                  <li>
+                    <Link href="/products?category=accessories">Accessories</Link>
+                  </li>
                 </ul>
               </div>
 
               <div className={classes.navSection}>
                 <h5>Help & Support</h5>
                 <ul>
-                  <li><Link href="/faq">FAQ</Link></li>
-                  <li><Link href="/shipping">Shipping Info</Link></li>
-                  <li><Link href="/returns">Returns</Link></li>
-                  <li><Link href="/track-order">Track Order</Link></li>
+                  <li>
+                    <Link href="/faq">FAQ</Link>
+                  </li>
+                  <li>
+                    <Link href="/shipping">Shipping Info</Link>
+                  </li>
+                  <li>
+                    <Link href="/returns">Returns</Link>
+                  </li>
+                  <li>
+                    <Link href="/track-order">Track Order</Link>
+                  </li>
                 </ul>
               </div>
 
               <div className={classes.navSection}>
                 <h5>Legal</h5>
                 <ul>
-                  <li><Link href="/secure-payment">Secure Payment</Link></li>
-                  <li><Link href="/terms">Terms of Service</Link></li>
-                  <li><Link href="/refund-policy">Refund Policy</Link></li>
-                  <li><Link href="/legal-notice">Legal Notice</Link></li>
+                  <li>
+                    <Link href="/secure-payment">Secure Payment</Link>
+                  </li>
+                  <li>
+                    <Link href="/terms">Terms of Service</Link>
+                  </li>
+                  <li>
+                    <Link href="/refund-policy">Refund Policy</Link>
+                  </li>
+                  <li>
+                    <Link href="/legal-notice">Legal Notice</Link>
+                  </li>
                 </ul>
               </div>
             </div>
