@@ -282,6 +282,7 @@ export interface Product {
       }
   )[];
   stripeProductID?: string;
+  refundableAmount?: number;
   priceJSON?: string;
   enablePaywall?: boolean;
   paywall?: (

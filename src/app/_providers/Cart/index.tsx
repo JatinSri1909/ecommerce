@@ -25,6 +25,14 @@ export type CartContext = {
     formatted: string
     raw: number
   }
+  refundableTotal: {
+    formatted: string
+    raw: number
+  }
+  deliveryCharge: {
+    formatted: string
+    raw: number
+  }
   hasInitializedCart: boolean
 }
 
@@ -58,6 +66,19 @@ export const CartProvider = props => {
     raw: 0,
   })
 
+  const [refundableTotal, setRefundableTotal] = useState<{
+    formatted: string
+    raw: number
+  }>({
+    formatted: '$0.00',
+    raw: 0,
+  })
+
+  const [deliveryCharge] = useState<{
+    formatted: string
+    raw: number
+  }>({ formatted: '$0', raw: 0 })
+
   const hasInitialized = useRef(false)
   const [hasInitializedCart, setHasInitialized] = useState(false)
 
@@ -69,7 +90,6 @@ export const CartProvider = props => {
 
       const syncCartFromLocalStorage = async () => {
         const localCart = localStorage.getItem('cart')
-
         const parsedCart = JSON.parse(localCart || '{}')
 
         if (parsedCart?.items && parsedCart?.items?.length > 0) {
@@ -79,8 +99,12 @@ export const CartProvider = props => {
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/${product}`,
               )
               const data = await res.json()
+              console.log('Fetched product:', data)
               return {
-                product: data,
+                product: {
+                  ...data,
+                  refundableAmount: data.refundableAmount || 0
+                },
                 quantity,
               }
             }),
@@ -223,7 +247,7 @@ export const CartProvider = props => {
     })
   }, [])
 
-  // calculate the new cart total whenever the cart changes
+  // calculate the new cart total and refundable total whenever the cart changes
   useEffect(() => {
     if (!hasInitialized) return
 
@@ -238,12 +262,37 @@ export const CartProvider = props => {
         )
       }, 0) || 0
 
+    const newRefundableTotal =
+      cart?.items?.reduce((acc, item) => {
+        if (!item?.product || typeof item.product !== 'object') return acc
+        
+        const refundableAmount = item.product.refundableAmount || 0
+        const quantity = typeof item.quantity === 'number' ? item.quantity : 0
+        
+        console.log('Calculating refundable for:', {
+          product: item.product.title,
+          refundableAmount,
+          quantity,
+          total: refundableAmount * quantity
+        })
+        
+        return acc + (refundableAmount * quantity)
+      }, 0) || 0
+
     setTotal({
       formatted: (newTotal / 100).toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD',
       }),
       raw: newTotal,
+    })
+
+    setRefundableTotal({
+      formatted: (newRefundableTotal / 100).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }),
+      raw: newRefundableTotal,
     })
   }, [cart, hasInitialized])
 
@@ -257,6 +306,8 @@ export const CartProvider = props => {
         clearCart,
         isProductInCart,
         cartTotal: total,
+        refundableTotal,
+        deliveryCharge,
         hasInitializedCart,
       }}
     >

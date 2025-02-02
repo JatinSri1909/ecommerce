@@ -35,4 +35,5 @@ export const product1: Partial<Product> = {
     },
   ],
   relatedProducts: [], // this is populated by the seed script
+  refundableAmount: 2000, // $20.00 refundable deposit
 }

@@ -35,7 +35,7 @@ export const CheckoutPage: React.FC<{
   const hasMadePaymentIntent = React.useRef(false)
   const { theme } = useTheme()
 
-  const { cart, cartIsEmpty, cartTotal } = useCart()
+  const { cart, cartIsEmpty, cartTotal, refundableTotal, deliveryCharge } = useCart()
 
   useEffect(() => {
     if (user !== null && cartIsEmpty) {
@@ -75,6 +75,11 @@ export const CheckoutPage: React.FC<{
   }, [cart, user])
 
   if (!user || !stripe) return null
+
+  const grandTotal = ((cartTotal.raw + refundableTotal.raw) / 100).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
 
   return (
     <Fragment>
@@ -129,9 +134,28 @@ export const CheckoutPage: React.FC<{
               }
               return null
             })}
-            <div className={classes.orderTotal}>
-              <p>Order Total</p>
-              <p>{cartTotal.formatted}</p>
+            <div className={classes.orderSummary}>
+              <div className={classes.summaryRow}>
+                <p>Subtotal</p>
+                <p>{cartTotal?.formatted}</p>
+              </div>
+              <div className={classes.summaryRow}>
+                <p>Refundable Amount</p>
+                <p>{refundableTotal?.formatted}</p>
+              </div>
+              <div className={classes.summaryRow}>
+                <p>Delivery</p>
+                <p>{deliveryCharge?.formatted || '$0'}</p>
+              </div>
+              <div className={[classes.summaryRow, classes.total].join(' ')}>
+                <p>Order Total</p>
+                <p>
+                  {((cartTotal?.raw + refundableTotal?.raw) / 100).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+                </p>
+              </div>
             </div>
           </ul>
         </div>

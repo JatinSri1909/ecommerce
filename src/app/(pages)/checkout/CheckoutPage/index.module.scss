@@ -50,3 +50,51 @@
 .error {
   margin-top: calc(var(--block-padding) - var(--base));
 }
+
+.orderSummary {
+  margin: 30px 0;
+  padding: 24px;
+  background-color: var(--theme-elevation-50);
+  border-radius: 8px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--theme-elevation-100);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--theme-elevation-1000);
+  }
+}
+
+.total {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px solid var(--theme-elevation-100);
+
+  p {
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
+
+.refundable {
+  color: var(--color-success-500) !important;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  &::before {
+    content: '↺';
+    font-size: 1.2em;
+  }
+}

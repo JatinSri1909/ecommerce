@@ -53,12 +53,35 @@
 }
 
 .titleWrapper {
-  h6 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: black;
+  margin-bottom: 10px;
+}
+
+.priceWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.refundable {
+  color: var(--color-success-500);
+  font-size: 0.875rem;
+  margin: 0;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  &::before {
+    content: '↺';
+    font-size: 1.2em;
   }
+}
+
+.subtotalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
 }
 
 .quantity {

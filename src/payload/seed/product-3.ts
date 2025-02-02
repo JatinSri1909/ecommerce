@@ -10,6 +10,7 @@ export const product3: Partial<Product> = {
     description: 'Make a one-time purchase to gain access to this content',
     image: '{{PRODUCT_IMAGE}}',
   },
+  refundableAmount: 1000, // $10.00 refundable deposit
   layout: [
     {
       blockType: 'content',

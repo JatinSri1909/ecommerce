@@ -38,10 +38,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   padding: 0;
   width: 100%;
+
+  @include large-break {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   @include mid-break {
     grid-template-columns: repeat(2, 1fr);

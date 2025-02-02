@@ -45,6 +45,9 @@
 }
 
 .productGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   width: 100%;
   background: linear-gradient(
     45deg,
@@ -56,12 +59,28 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
 
+  @include large-break {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mid-break {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @include small-break {
+    grid-template-columns: 1fr;
+  }
+
   :global(.product-card) {
     background: white;
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid rgba(219, 0, 29, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
       transform: translateY(-10px);
@@ -71,6 +90,7 @@
     :global(.media) {
       position: relative;
       overflow: hidden;
+      aspect-ratio: 1;
 
       img {
         transition: transform 0.5s ease;
@@ -83,12 +103,16 @@
 
     :global(.content) {
       padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
 
       h4 {
         font-size: 1.4rem;
         font-weight: 600;
         color: black;
-        margin: 0 0 15px;
+        margin: 0;
         letter-spacing: -0.5px;
       }
 
@@ -96,13 +120,15 @@
         color: #666;
         font-size: 1.1rem;
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin: 0;
+        flex-grow: 1;
       }
 
       :global(.price) {
         color: #db001d;
         font-weight: 600;
         font-size: 1.3rem;
+        margin: 0;
       }
     }
   }

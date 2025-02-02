@@ -79,6 +79,19 @@
     font-weight: 600;
     color: black;
     margin: 0;
+
+    &.refundable {
+      color: var(--color-success-500);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+
+      &::before {
+        content: '↺';
+        font-size: 1.2em;
+      }
+    }
   }
 
   .checkoutButton {

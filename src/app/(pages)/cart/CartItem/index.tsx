@@ -46,7 +46,14 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
       <div className={classes.itemDetails}>
         <div className={classes.titleWrapper}>
           <h6>{title}</h6>
-          <Price product={product} button={false} />
+          <div className={classes.priceWrapper}>
+            <Price product={product} button={false} />
+            {product.refundableAmount > 0 && (
+              <p className={classes.refundable}>
+                +${(product.refundableAmount / 100).toFixed(2)} Refundable
+              </p>
+            )}
+          </div>
         </div>
 
         <div className={classes.quantity}>
@@ -61,10 +68,13 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
           </div>
 
           <input
-            type="text"
+            type="number"
             className={classes.quantityInput}
             value={quantity}
             onChange={enterQty}
+            min="1"
+            aria-label={`Quantity for ${title}`}
+            title={`Quantity for ${title}`}
           />
 
           <div className={classes.quantityBtn} onClick={incrementQty}>
@@ -80,7 +90,14 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
       </div>
 
       <div className={classes.subtotalWrapper}>
-        <Price product={product} button={false} quantity={quantity} />
+        <div className={classes.subtotalContent}>
+          <Price product={product} button={false} quantity={quantity} />
+          {product.refundableAmount > 0 && (
+            <p className={classes.refundable}>
+              +${((product.refundableAmount * quantity) / 100).toFixed(2)} Refundable
+            </p>
+          )}
+        </div>
         <RemoveFromCartButton product={product} />
       </div>
     </li>

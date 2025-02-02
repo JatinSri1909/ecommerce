@@ -1,60 +1,47 @@
-import * as React from 'react'
-import { Select, useFormFields } from 'payload/components/forms'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useField } from 'payload/components/forms'
+import { Select } from 'payload/components/forms'
 import CopyToClipboard from 'payload/dist/admin/components/elements/CopyToClipboard'
 import { TextField } from 'payload/dist/fields/config/types'
 
-export const ProductSelect: React.FC<TextField> = props => {
-  const { name, label } = props
-  const [options, setOptions] = React.useState<
-    {
-      label: string
-      value: string
-    }[]
-  >([])
+import { Product } from '../../../payload-types'
 
-  const { value: stripeProductID } = useFormFields(([fields]) => fields[name])
+export const ProductSelect: React.FC<{ path: string }> = ({ path }) => {
+  const { value, setValue } = useField<string>({ path })
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([])
+  const [loading, setLoading] = useState(true)
 
-  React.useEffect(() => {
-    const getStripeProducts = async () => {
-      const productsFetch = await fetch('/api/stripe/products', {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+  const getProducts = useCallback(async () => {
+    try {
+      const res = await fetch('/api/products')
+      const json = await res.json()
 
-      const res = await productsFetch.json()
+      if (json?.data) {
+        const formattedOptions = json.data.map(product => ({
+          label: `${product.name} - ${product.default_price ? `$${product.default_price.unit_amount / 100}` : 'No price set'}`,
+          value: product.id,
+        }))
 
-      if (res?.data) {
-        const fetchedProducts = res.data.reduce(
-          (acc, item) => {
-            acc.push({
-              label: item.name || item.id,
-              value: item.id,
-            })
-            return acc
-          },
-          [
-            {
-              label: 'Select a product',
-              value: '',
-            },
-          ],
-        )
-        setOptions(fetchedProducts)
+        setOptions(formattedOptions)
       }
+    } catch (e) {
+      console.error('Error fetching products:', e) // eslint-disable-line no-console
     }
 
-    getStripeProducts()
+    setLoading(false)
   }, [])
+
+  useEffect(() => {
+    getProducts()
+  }, [getProducts])
 
   const href = `https://dashboard.stripe.com/${
     process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY ? 'test/' : ''
-  }products/${stripeProductID}`
+  }products/${value}`
 
   return (
     <div>
-      <p style={{ marginBottom: '0' }}>{typeof label === 'string' ? label : 'Product'}</p>
+      <p style={{ marginBottom: '0' }}>Select a Stripe Product</p>
       <p
         style={{
           marginBottom: '0.75rem',
@@ -74,8 +61,15 @@ export const ProductSelect: React.FC<TextField> = props => {
         </a>
         {'.'}
       </p>
-      <Select {...props} label="" options={options} />
-      {Boolean(stripeProductID) && (
+      <Select
+        path={path}
+        label="Select a Stripe Product"
+        options={options}
+        value={value}
+        onChange={setValue}
+        disabled={loading}
+      />
+      {Boolean(value) && (
         <div
           style={{
             marginTop: '-1rem',
@@ -90,7 +84,7 @@ export const ProductSelect: React.FC<TextField> = props => {
               }}
             >
               {`Manage "${
-                options.find(option => option.value === stripeProductID)?.label || 'Unknown'
+                options.find(option => option.value === value)?.label || 'Unknown'
               }" in Stripe`}
             </span>
             <CopyToClipboard value={href} />
@@ -105,7 +99,7 @@ export const ProductSelect: React.FC<TextField> = props => {
             <a
               href={`https://dashboard.stripe.com/${
                 process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY ? 'test/' : ''
-              }products/${stripeProductID}`}
+              }products/${value}`}
               target="_blank"
               rel="noreferrer noopener"
             >

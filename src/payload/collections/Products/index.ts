@@ -92,6 +92,18 @@ const Products: CollectionConfig = {
               },
             },
             {
+              name: 'refundableAmount',
+              label: 'Refundable Amount',
+              type: 'number',
+              required: true,
+              defaultValue: 1000,
+              min: 0,
+              admin: {
+                description: 'Enter the refundable amount for this product (in cents)',
+                step: 1,
+              },
+            },
+            {
               name: 'priceJSON',
               label: 'Price JSON',
               type: 'textarea',
