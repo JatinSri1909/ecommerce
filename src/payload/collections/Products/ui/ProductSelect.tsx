@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useField } from 'payload/components/forms'
-import { Select } from 'payload/components/forms'
+import { SelectInput, useField } from 'payload/components/forms'
 import CopyToClipboard from 'payload/dist/admin/components/elements/CopyToClipboard'
 import { TextField } from 'payload/dist/fields/config/types'
 
@@ -18,7 +17,9 @@ export const ProductSelect: React.FC<{ path: string }> = ({ path }) => {
 
       if (json?.data) {
         const formattedOptions = json.data.map(product => ({
-          label: `${product.name} - ${product.default_price ? `$${product.default_price.unit_amount / 100}` : 'No price set'}`,
+          label: `${product.name} - ${
+            product.default_price ? `$${product.default_price.unit_amount / 100}` : 'No price set'
+          }`,
           value: product.id,
         }))
 
@@ -61,13 +62,13 @@ export const ProductSelect: React.FC<{ path: string }> = ({ path }) => {
         </a>
         {'.'}
       </p>
-      <Select
+      <SelectInput
         path={path}
+        name="stripeProduct"
         label="Select a Stripe Product"
         options={options}
         value={value}
         onChange={setValue}
-        disabled={loading}
       />
       {Boolean(value) && (
         <div
